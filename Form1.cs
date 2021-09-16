@@ -40,6 +40,7 @@ namespace WindowsFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            numericUpDown1.Value = 21.0M;
             maskedTextBox1.Mask = "(999)000-0000";
             //DB정보로 해줘도 됨.
             listBox1.Items.Add("VIP회원");
@@ -80,6 +81,12 @@ namespace WindowsFormsApp1
 
             monthCalendar1.MaxSelectionCount = 31;
 
+            ContextMenu ctx = new ContextMenu();
+            ctx.MenuItems.Add(new MenuItem("열기"));
+            ctx.MenuItems.Add(new MenuItem("실행"));
+            ctx.MenuItems.Add("-");
+            ctx.MenuItems.Add(new MenuItem("종료", new EventHandler((s, ex) => this.Close())));
+            notifyIcon1.ContextMenu = ctx;
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -149,6 +156,19 @@ namespace WindowsFormsApp1
         {
             textBox1.Text = monthCalendar1.SelectionStart.ToShortDateString();
             textBox2.Text = monthCalendar1.SelectionEnd.ToShortDateString();
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized) this.WindowState = FormWindowState.Normal;
+            this.Activate();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            decimal C = numericUpDown1.Value;
+            decimal F = C * (9.0M / 5.0M) + 32.0M;
+            this.textBox3.Text = F.ToString();
         }
     }
 }
