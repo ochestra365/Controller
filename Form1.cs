@@ -170,5 +170,22 @@ namespace WindowsFormsApp1
             decimal F = C * (9.0M / 5.0M) + 32.0M;
             this.textBox3.Text = F.ToString();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = Bitmap.FromFile("folder.png");
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.SizeMode == PictureBoxSizeMode.Zoom)
+            {
+                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            else
+            {
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+        }
     }
 }
