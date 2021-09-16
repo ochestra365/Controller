@@ -40,6 +40,7 @@ namespace WindowsFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            maskedTextBox1.Mask = "(999)000-0000";
             //DB정보로 해줘도 됨.
             listBox1.Items.Add("VIP회원");
             listBox1.Items.Add("정회원");
@@ -118,6 +119,24 @@ namespace WindowsFormsApp1
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             listView1.View = View.Tile;
+        }
+
+        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+            if (e.Position < 5)
+            {
+                toolTip1.Show("숫자나 공란만 입력가능", this);
+            }
+            else
+            {
+                toolTip1.Show("숫자만 입력 가능", this);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string val = maskedTextBox1.Text;
+            MessageBox.Show(val);
         }
     }
 }
