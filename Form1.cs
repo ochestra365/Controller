@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO;
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
@@ -45,11 +45,34 @@ namespace WindowsFormsApp1
             listBox1.Items.Add("정회원");
             listBox1.Items.Add("준회원");
             listBox1.Items.Add("일일 회원");
+            listBox1.SelectedIndex = 1;
+
             string[] data = { "사과", "토마토", "포도", "배", "복숭아" };
             checkedListBox1.SetItemChecked(0, true);
             checkedListBox1.SetItemChecked(1, true);
             comboBox1.Items.AddRange(data);
             comboBox1.SelectedIndex = 0;
+
+            string currDir = Environment.CurrentDirectory;
+            DirectoryInfo di = new DirectoryInfo(currDir);
+            FileInfo[] files = di.GetFiles();
+
+            listView1.BeginUpdate();
+            listView1.View = View.Details;
+            listView1.LargeImageList = imageList1;
+            listView1.SmallImageList = imageList2;
+            foreach(var fi in files)
+            {
+                ListViewItem lvi = new ListViewItem(fi.Name);
+                lvi.SubItems.Add(fi.Length.ToString());
+                lvi.SubItems.Add(fi.LastWriteTime.ToString());
+                lvi.ImageIndex = 0;
+                listView1.Items.Add(lvi);
+            }
+            listView1.Columns.Add("파일명", 200, HorizontalAlignment.Left);
+            listView1.Columns.Add("사이즈", 70, HorizontalAlignment.Left);
+            listView1.Columns.Add("날짜", 150, HorizontalAlignment.Left);
+            listView1.EndUpdate();
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -78,7 +101,23 @@ namespace WindowsFormsApp1
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-      
+            memberType = (MemberType)listBox1.SelectedIndex;
+        }
+        private MemberType memberType;
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            listView1.View = View.Details;
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            listView1.View = View.List;
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            listView1.View = View.Tile;
         }
     }
 }
