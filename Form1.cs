@@ -20,10 +20,25 @@ namespace WindowsFormsApp1
             Associate,
             DayPass
         }
-
+        private Timer timer;
+        private int timerCount = 0;
         public Form1()
         {
             InitializeComponent();
+            timer = new Timer();
+            timer.Interval = 1000;
+            timer.Tick += new EventHandler(timer_Tick);
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            progressBar1.PerformStep();
+            progressBar2.PerformStep();
+            if (++timerCount == 10)
+            {
+                timer.Stop();
+                progressBar3.Enabled = false;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -40,6 +55,19 @@ namespace WindowsFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            progressBar1.Style = ProgressBarStyle.Blocks;
+
+            progressBar2.Style = ProgressBarStyle.Continuous;
+            progressBar2.Minimum = 0;
+            progressBar2.Maximum = 90;
+            progressBar2.Step = 5;
+            progressBar2.Value = 0;
+
+            progressBar3.Style = ProgressBarStyle.Marquee;
+            progressBar3.Enabled = true;
+
+            timer.Start();
+
             numericUpDown1.Value = 21.0M;
             maskedTextBox1.Mask = "(999)000-0000";
             //DB정보로 해줘도 됨.
