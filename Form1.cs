@@ -13,6 +13,10 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        enum Meat 
+        {등심,안심,갈비 }
+        private Meat _selectedMeat;
+
         public enum MemberType 
         {
             VIP=0,
@@ -115,6 +119,13 @@ namespace WindowsFormsApp1
             ctx.MenuItems.Add("-");
             ctx.MenuItems.Add(new MenuItem("종료", new EventHandler((s, ex) => this.Close())));
             notifyIcon1.ContextMenu = ctx;
+
+            textBox4.Text = "제주특별자치도 헤헤";
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("이름 : 박성철");
+            sb.AppendLine("나이 : 28세");
+            sb.AppendLine("국적 : 탐라국");
+            textBox4.Text = sb.ToString();
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -214,6 +225,35 @@ namespace WindowsFormsApp1
             {
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            this._selectedMeat = Meat.등심;
+            DisPlayMenu();
+        }
+
+        private void DisPlayMenu()
+        {
+            label2.Text = string.Format("{0}", this._selectedMeat.ToString());
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+            this._selectedMeat = Meat.안심;
+            DisPlayMenu();
+        }
+
+        private void radioButton6_CheckedChanged(object sender, EventArgs e)
+        {
+            this._selectedMeat = Meat.갈비;
+            DisPlayMenu();
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            textBox4.SelectionStart = textBox4.TextLength;
+            textBox4.SelectionLength = 0;
         }
     }
 }
