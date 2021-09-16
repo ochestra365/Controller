@@ -74,6 +74,12 @@ namespace WindowsFormsApp1
             listView1.Columns.Add("사이즈", 70, HorizontalAlignment.Left);
             listView1.Columns.Add("날짜", 150, HorizontalAlignment.Left);
             listView1.EndUpdate();
+
+            monthCalendar1.SelectionStart = DateTime.Now;
+            monthCalendar1.SelectionEnd = DateTime.Now.AddDays(3);
+
+            monthCalendar1.MaxSelectionCount = 31;
+
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -137,6 +143,12 @@ namespace WindowsFormsApp1
         {
             string val = maskedTextBox1.Text;//f
             MessageBox.Show(val);
+        }
+
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            textBox1.Text = monthCalendar1.SelectionStart.ToShortDateString();
+            textBox2.Text = monthCalendar1.SelectionEnd.ToShortDateString();
         }
     }
 }
